@@ -2,24 +2,20 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { BsFillPlayFill, BsPause } from 'react-icons/bs'
 import { MdRestartAlt } from 'react-icons/md'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-
-const NORMAL_STARTING_TIME = 1500
-const SMALL_BREAK_STARTING_TIME = 300
-const LONG_BREAK_STARTING_TIME = 900
-
-const initState = {
-  seconds: NORMAL_STARTING_TIME,
-  cycleType: 'normal', //normal - smallBreak - longBreak
-  status: 'idle', // idle - playing - paused
-  interval: null,
-  cycleNumber: 1,
-}
+import { useEffect, useRef } from 'react'
+import Layout from '../src/components/layout'
+import {
+  initTimer,
+  pauseTimer,
+  stopTimer,
+  changePhase,
+} from '../src/features/pomodoro/pomodoroSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Home() {
-  const [{ seconds, status, interval, cycleNumber, cycleType }, setState] =
-    useState(initState)
+  const dispatch = useDispatch()
+  const remainingTime = useSelector((state) => state.pomodoro.remainingTime)
+  const status = useSelector((state) => state.pomodoro.status)
 
   const secondsToFormatedTime = (currSeconds) => {
     const min = Math.floor(currSeconds / 60)
@@ -28,106 +24,53 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (seconds !== 0) {
+    if (remainingTime > 0) {
       return
     }
 
-    if (cycleType === 'normal') {
-      if (cycleNumber === 4) {
-        setState((prevState) => ({
-          ...prevState,
-          cycleType: 'longBreak',
-          seconds: LONG_BREAK_STARTING_TIME,
-          cycleNumber: 1,
-        }))
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          cycleType: 'smallBreak',
-          seconds: SMALL_BREAK_STARTING_TIME,
-          cycleNumber: prevState.cycleNumber + 1,
-        }))
-      }
-    } else {
-      setState((prevState) => ({
-        ...prevState,
-        cycleType: 'normal',
-        seconds: NORMAL_STARTING_TIME,
-      }))
-    }
-  }, [seconds, cycleType, cycleNumber])
-
-  useEffect(() => {
-    return () => {
-      clearInterval(interval)
-    }
-  }, [interval])
+    dispatch(changePhase())
+  }, [remainingTime, dispatch])
 
   const onPlayClickHandler = () => {
-    const interval = setInterval(() => {
-      setState((prevState) => ({
-        ...prevState,
-        seconds: prevState.seconds - 1,
-        status: 'playing',
-        interval: prevState.interval || interval,
-      }))
-    }, 1000)
-  }
-
-  const onPauseClickHandler = () => {
-    clearInterval(interval)
-    setState((prevState) => ({
-      ...prevState,
-      status: 'paused',
-      interval: null,
-    }))
+    status === 'playing' ? dispatch(pauseTimer()) : dispatch(initTimer())
   }
 
   const onStopClickHandler = () => {
-    if (interval) {
-      clearInterval(interval)
-    }
-
-    setState((prevState) => ({
-      ...initState,
-      seconds:
-        prevState.cycleType === 'longBreak'
-          ? LONG_BREAK_STARTING_TIME
-          : prevState.cycleType === 'smallBreak'
-          ? SMALL_BREAK_STARTING_TIME
-          : NORMAL_STARTING_TIME,
-      cycleNumber: prevState.cycleNumber,
-      cycleType: prevState.cycleType,
-    }))
+    dispatch(stopTimer())
   }
 
+  const playerRef = useRef(null)
+
+  useEffect(() => {
+    playerRef.current.play()
+  }, [])
+
   return (
-    <main className="min-h-screen text-primary bg-background">
-      <div className="flex-col justify-center max-w-screen-lg m-auto align-middle">
-        <header className="flex justify-end p-8 text-center align-middle">
-          <p>
-            <Link href="/config">Config</Link>
-          </p>
-          <p>sign-in</p>
-        </header>
-        <div className="text-center border-lg rounded-full pb-[35%] w-[35%] h-0 overflow-hidden box-content relative m-auto">
-          <p className="text-9xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-            {secondsToFormatedTime(seconds)}
-          </p>
-        </div>
-        <div className="flex justify-center m-auto my-8 text-3xl align-middle">
-          <button onClick={onPlayClickHandler} disabled={status === 'playing'}>
-            <BsFillPlayFill className="m-2" />
-          </button>
-          <button onClick={onPauseClickHandler} disabled={status !== 'playing'}>
-            <BsPause className="m-2" />
-          </button>
-          <button onClick={onStopClickHandler} disabled={status === 'idle'}>
-            <MdRestartAlt className="m-2" />
-          </button>
-        </div>
-        <footer className="text-center"> made by</footer>
+    <Layout>
+      <audio
+        controls
+        src="/sounds/0.mp3"
+        ref={playerRef}
+        loop
+        className="hidden h-0"
+      />
+      <div className="text-center border-lg rounded-full pb-[35%] w-[35%] h-0 overflow-hidden box-content relative m-auto">
+        <p className="text-9xl absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          {secondsToFormatedTime(remainingTime)}
+        </p>
       </div>
-    </main>
+      <div className="flex justify-center m-auto my-8 text-3xl align-middle">
+        <button onClick={onPlayClickHandler}>
+          {status === 'playing' ? (
+            <BsPause className="m-2" />
+          ) : (
+            <BsFillPlayFill className="m-2" />
+          )}
+        </button>
+        <button onClick={onStopClickHandler} disabled={status === 'idle'}>
+          <MdRestartAlt className="m-2" />
+        </button>
+      </div>
+    </Layout>
   )
 }
