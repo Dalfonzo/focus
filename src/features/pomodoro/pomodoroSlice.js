@@ -26,6 +26,39 @@ export const initTimer = createAsyncThunk(
   }
 )
 
+export const saveConfiguration = createAsyncThunk(
+  'pomodoro/saveConfiguration',
+  (payload, { dispatch, getState }) => {
+    const { pomodoro: state } = getState()
+    let remainingTime
+
+    const sessionDurationChanged =
+      payload.sessionDuration !== state.sessionDuration
+    const shortBreakDurationChanged =
+      payload.shortBreakDuration !== state.shortBreakDuration
+    const longBreakDurationChanged =
+      payload.longBreakDuration !== state.longBreakDuration
+
+    if (sessionDurationChanged && state.cycleType === 'normal') {
+      dispatch({ type: 'pomodoro/stopTimer' })
+      remainingTime = payload.sessionDuration
+    } else if (shortBreakDurationChanged && state.cycleType === 'shortBreak') {
+      dispatch({ type: 'pomodoro/stopTimer' })
+      remainingTime = payload.shortBreakDuration
+    } else if (longBreakDurationChanged && state.cycleType === 'longBreak') {
+      dispatch({ type: 'pomodoro/stopTimer' })
+      remainingTime = payload.longBreakDuration
+    } else {
+      remainingTime = state.remainingTime
+    }
+
+    dispatch({
+      type: 'pomodoro/assignNewConfiguration',
+      payload: { ...payload, remainingTime },
+    })
+  }
+)
+
 const pomodoroReducer = createSlice({
   name: 'pomodoro',
   initialState,
@@ -53,8 +86,7 @@ const pomodoroReducer = createSlice({
             : state.cycleType === 'shortBreak'
             ? state.shortBreakDuration
             : state.sessionDuration,
-        cycleNumber: state.cycleNumber,
-        cycleType: state.cycleType,
+        status: 'idle',
       }
     },
     pauseTimer: (state) => {
@@ -85,11 +117,13 @@ const pomodoroReducer = createSlice({
         }
       }
     },
-    saveConfiguration: (state, action) => ({ ...state, ...action.payload }),
+    assignNewConfiguration: (state, { payload }) => ({
+      ...state,
+      ...payload,
+    }),
   },
 })
 
-export const { pauseTimer, stopTimer, changePhase, saveConfiguration } =
-  pomodoroReducer.actions
+export const { pauseTimer, stopTimer, changePhase } = pomodoroReducer.actions
 
 export default pomodoroReducer.reducer
