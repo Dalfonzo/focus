@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
   backgroundSound: 'none',
-  alertSound: 'none',
-  sessionDuration: 3,
-  shortBreakDuration: 4,
-  longBreakDuration: 5,
-  remainingTime: 3,
-  cycleType: 'normal', //normal - shortBreak - longBreak
-  status: 'idle', // idle - playing - paused
+  alertSound: 'success',
+  sessionDuration: 1500,
+  shortBreakDuration: 300,
+  longBreakDuration: 900,
+  remainingTime: 1500,
+  cycleType: 'normal',
+  status: 'idle',
   interval: null,
   cycleNumber: 0,
 }
