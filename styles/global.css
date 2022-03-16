@@ -17,6 +17,11 @@ html {
   box-sizing: border-box;
 }
 
+@media screen and (max-width: 400px) {
+  html {
+    font-size: 80%;
+  }
+}
 /**
 * Gradients
 */

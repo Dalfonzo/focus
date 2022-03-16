@@ -50,7 +50,7 @@ const Configuration = () => {
   return (
     <Layout>
       <BackBtn />
-      <div className="w-full max-w-lg mx-auto bg-white-10 z-[1] relative p-[5rem] shadow-container rounded-[10px]">
+      <div className="w-full max-w-lg mx-auto bg-white-10 z-[1] relative p-[1rem] md:p-[3rem] lg:p-[5rem] shadow-container rounded-[10px]">
         <form className="w-full" onSubmit={onSubmitHandler}>
           <p className="block mt-6 mb-4 text-xs font-bold tracking-wide underline uppercase">
             Duration (minutes)
