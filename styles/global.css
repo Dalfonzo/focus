@@ -16,3 +16,90 @@
 html {
   box-sizing: border-box;
 }
+
+/**
+* Gradients
+*/
+.main-gradient {
+  background: linear-gradient(
+    150deg,
+    #fe53bb 0%,
+    rgba(158, 149, 196, 0) 43.13%,
+    rgba(106, 185, 202, 0) 63.94%,
+    #09fbd3 100%
+  );
+}
+
+.btn-gradient {
+  background: linear-gradient(150deg, #fe53bb 0%, #09fbd3 100%);
+}
+
+/**
+* Animations
+*/
+.pulse {
+  animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.spin {
+  animation: spin 60s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fade {
+  animation-duration: 0.2s;
+  animation-name: fade;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade.pop {
+  animation-name: animate-pop;
+  animation-duration: 0.2s;
+}
+
+@keyframes animate-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+/**
+* Hover Effects
+ */
+
+.move-up:hover {
+  transform: translateY(-4px);
+}

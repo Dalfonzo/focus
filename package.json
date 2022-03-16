@@ -8,13 +8,16 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "pre-commit": "next lint --fix && git add -A ."
+    "pre-commit": "next lint --fix"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.0",
+    "daisyui": "^2.8.0",
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
