@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { changePhase } from '../../src/features/pomodoro/pomodoroSlice'
+import { changePhase } from '../features/pomodoro/pomodoroSlice'
 import { secondsToFormatedTime, currentPageFormatter } from '../utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'

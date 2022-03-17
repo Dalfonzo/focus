@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Layout from '../src/components/layout'
-import { saveConfiguration } from '../src/features/pomodoro/pomodoroSlice'
-import { secondsToMinutes, minutesToSeconds } from '../src/utils'
-import BackBtn from '../src/components/back-btn'
+import Layout from '../components/layout'
+import { saveConfiguration } from '../features/pomodoro/pomodoroSlice'
+import { secondsToMinutes, minutesToSeconds } from '../utils'
+import BackBtn from '../components/back-btn'
 
 const ALERT_SOUNDS = ['success']
 const BACKGROUND_SOUNDS = ['none', 'rain', 'bonfire']

@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
-import { store } from '../src/app/store'
-import Sounds from '../src/components/sounds'
+import { store } from '../app/store'
+import Sounds from '../components/sounds'
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
