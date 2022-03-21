@@ -41,13 +41,19 @@ const Layout = ({ children }) => {
       <header className="max-w-screen-lg px-4 py-8 m-auto text-center align-middle gap-7">
         <nav className="flex justify-end ">
           <Link href="/">
-            <a className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up">
+            <a
+              className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up"
+              title="Home"
+            >
               <HomeIcon className="mx-2" />
               <p className="hidden sm:block">Home</p>
             </a>
           </Link>
           <Link href="/configuration">
-            <a className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up">
+            <a
+              className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up"
+              title="Configuration"
+            >
               <NutIcon className="mx-2" />
               <p className="hidden sm:block">Configuration</p>
             </a>
@@ -55,7 +61,10 @@ const Layout = ({ children }) => {
           {isAuthenticated ? (
             <>
               <Link href={`/profile/${userId}`}>
-                <a className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up">
+                <a
+                  className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up"
+                  title="Profile"
+                >
                   <ProfileIcon className="mx-2" />
                   <p className="hidden sm:block">Profile</p>
                 </a>
@@ -64,13 +73,16 @@ const Layout = ({ children }) => {
                 className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up"
                 onClick={() => dispatch(signOut())}
               >
-                <SignOutIcon className="mx-2" />
+                <SignOutIcon className="mx-2" title="Sign Out" />
                 <p className="hidden sm:block">Sign out</p>
               </button>
             </>
           ) : (
             <Link href="/signin">
-              <a className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up">
+              <a
+                className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up"
+                title="Sign in"
+              >
                 <SignInIcon className="mx-2" />
                 <p className="hidden sm:block">Sign in</p>
               </a>
