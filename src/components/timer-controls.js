@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BsFillPlayFill, BsPause } from 'react-icons/bs'
-import { MdRestartAlt } from 'react-icons/md'
+import { PauseIcon, PlayIcon, RestartIcon } from '../lib'
 import {
   initTimer,
   pauseTimer,
@@ -27,14 +26,14 @@ const Controls = () => {
       >
         <span className="w-full h-full rounded-[50%] p-1 bg-[rgb(0 0 0 / 5%)] backdrop-blur-xl backdrop-saturate-100 ">
           {status === 'playing' ? (
-            <BsPause className="m-2" />
+            <PauseIcon className="m-2" />
           ) : (
-            <BsFillPlayFill className="m-2" />
+            <PlayIcon className="m-2" />
           )}
         </span>
       </button>
       <button onClick={onStopClickHandler} disabled={status === 'idle'}>
-        <MdRestartAlt className="m-2 move-up" />
+        <RestartIcon className="m-2 move-up" />
       </button>
     </div>
   )

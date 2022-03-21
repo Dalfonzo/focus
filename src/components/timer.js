@@ -1,21 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { changePhase } from '../features/pomodoro/pomodoroSlice'
-import { secondsToFormatedTime, currentPageFormatter } from '../utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import { secondsToFormatedTime, currentPageFormatter } from '../utils'
 
 const Timer = () => {
-  const dispatch = useDispatch()
   const remainingTime = useSelector((state) => state.pomodoro.remainingTime)
-
-  useEffect(() => {
-    if (remainingTime > -1) {
-      return
-    }
-
-    dispatch(changePhase())
-  }, [remainingTime, dispatch])
 
   return (
     <>

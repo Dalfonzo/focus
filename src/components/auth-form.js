@@ -96,7 +96,7 @@ const AuthForm = ({ onSubmitHandler, title }) => {
           {router.pathname === '/signin' && (
             <p className="py-3 text-sm text-white">
               Not registered yet? Sign Up
-              <Link href="signup">
+              <Link href="/signup">
                 <a className="px-2 underline text-fuchsia move-up">here</a>
               </Link>
             </p>

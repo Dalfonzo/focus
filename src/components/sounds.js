@@ -14,7 +14,12 @@ const Sounds = ({ children }) => {
     if (!backgroundAudioRef.current) {
       return
     }
-    backgroundAudioRef.current.play()
+
+    if (status === 'playing') {
+      backgroundAudioRef.current.play()
+    } else {
+      backgroundAudioRef.current.pause()
+    }
   }, [status, backgroundSound])
 
   React.useEffect(() => {

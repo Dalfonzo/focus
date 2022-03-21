@@ -1,17 +1,20 @@
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import { BsNutFill } from 'react-icons/bs'
-import { FaUserAstronaut, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
+import { SignInIcon, SignOutIcon, ProfileIcon, NutIcon } from '../lib'
 import { currentPageFormatter } from '../utils'
-import { useRouter } from 'next/router'
 import { useAuthGuard } from '../hooks/useAuthGuard'
 import { signOut } from '../features/authentication/authenticationSlice'
-import { useDispatch } from 'react-redux'
+import { useProgressPersistence, useTimerPhaseHandler } from '../hooks'
 
 const Layout = ({ children }) => {
   const { pathname } = useRouter()
   const { isAuthenticated } = useAuthGuard()
   const dispatch = useDispatch()
+  const userId = useSelector((state) => state.auth.user.id)
+  useProgressPersistence()
+  useTimerPhaseHandler()
 
   return (
     <div className="min-h-screen bg-background text-white-70">
@@ -23,15 +26,15 @@ const Layout = ({ children }) => {
         <nav className="flex justify-end ">
           <Link href="/configuration">
             <a className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up">
-              <BsNutFill className="mx-2" />
+              <NutIcon className="mx-2" />
               Configuration
             </a>
           </Link>
           {isAuthenticated ? (
             <>
-              <Link href="/profile">
+              <Link href={`/profile/${userId}`}>
                 <a className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up">
-                  <FaUserAstronaut className="mx-2" />
+                  <ProfileIcon className="mx-2" />
                   Profile
                 </a>
               </Link>
@@ -39,15 +42,15 @@ const Layout = ({ children }) => {
                 className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up"
                 onClick={() => dispatch(signOut())}
               >
-                <FaSignOutAlt className="mx-2" />
-                Log out
+                <SignOutIcon className="mx-2" />
+                Sign out
               </button>
             </>
           ) : (
             <Link href="/signin">
               <a className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up">
-                <FaSignInAlt className="mx-2" />
-                Log in
+                <SignInIcon className="mx-2" />
+                Sign in
               </a>
             </Link>
           )}
