@@ -3,6 +3,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import { store } from '../app/store'
 import Sounds from '../components/sounds'
+import RouterGuard from '../components/router-guard'
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
@@ -11,9 +12,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Sounds>
-          <Component {...pageProps} />
-        </Sounds>
+        <RouterGuard>
+          <Sounds>
+            <Component {...pageProps} />
+          </Sounds>
+        </RouterGuard>
       </PersistGate>
     </Provider>
   )
