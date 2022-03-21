@@ -116,7 +116,9 @@ const Configuration = () => {
             <p className="block mt-6 mb-4 text-xs font-bold tracking-wide underline uppercase">
               background sound
             </p>
-
+            <p className="mt-1 mb-4 text-sm text-fuchsia">
+              Note: These sounds will play only when the pomodoro is runnig
+            </p>
             <div className="space-y-4">
               {BACKGROUND_SOUNDS.map((sound, index) => {
                 return (
