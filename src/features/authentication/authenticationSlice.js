@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { supabase } from '../../libs/supabaseClient'
+import { supabase } from '../../lib/supabaseClient'
 
 const initialState = {
   user: {},
-  session: {},
   status: 'idle',
   error: null,
 }
@@ -14,7 +13,7 @@ export const signIn = createAsyncThunk(
     try {
       dispatch({ type: 'auth/started' })
 
-      const { error, session, user } = await supabase.auth.signIn({
+      const { error, user } = await supabase.auth.signIn({
         email: payload.email,
         password: payload.password,
       })
@@ -22,7 +21,7 @@ export const signIn = createAsyncThunk(
       if (error) {
         dispatch({ type: 'auth/error', error })
       } else {
-        dispatch({ type: 'auth/success', payload: { session, user } })
+        dispatch({ type: 'auth/success', payload: { user } })
       }
     } catch (error) {
       dispatch({ type: 'auth/error', error: { message: 'Unexpected errror' } })
@@ -37,7 +36,7 @@ export const signUp = createAsyncThunk(
     try {
       dispatch({ type: 'auth/started' })
 
-      const { error, session, user } = await supabase.auth.signUp({
+      const { error, user } = await supabase.auth.signUp({
         email: payload.email,
         password: payload.password,
       })
@@ -45,7 +44,7 @@ export const signUp = createAsyncThunk(
       if (error) {
         dispatch({ type: 'auth/error', error })
       } else {
-        dispatch({ type: 'auth/success', payload: { session, user } })
+        dispatch({ type: 'auth/success', payload: { user } })
       }
     } catch (error) {
       dispatch({ type: 'auth/error', error: { message: 'Unexpected errror' } })
@@ -63,7 +62,7 @@ export const signOut = createAsyncThunk(
       if (error) {
         dispatch({ type: 'auth/error', error })
       } else {
-        dispatch({ type: 'auth/success', payload: { session: {}, user: {} } })
+        dispatch({ type: 'auth/success', payload: { user: {} } })
       }
     } catch (error) {
       dispatch({ type: 'auth/error', error: { message: 'Unexpected errror' } })
