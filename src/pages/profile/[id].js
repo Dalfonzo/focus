@@ -20,7 +20,9 @@ export default function Profile({ data, error }) {
               Last Pomodoro
             </p>
             <p className="ml-auto w-fit">
-              {onlyDateFormatter(data.latest_pomodoro)}
+              {data.latest_pomodoro
+                ? onlyDateFormatter(data.latest_pomodoro)
+                : '-'}
             </p>
           </div>
           <div className="shadow-container rounded-[10px] p-4 my-2">
@@ -44,21 +46,25 @@ export default function Profile({ data, error }) {
             <span className="text-sm text-fuchsia">
               Only the last 20 are shown
             </span>
-            <ul>
-              {data.user_history.map((element) => {
-                return (
-                  <li key={element.id} className="flex p-1 justify-evenly ">
-                    <p className="p-1 ">
-                      Date: {dateWithtimeFormatter(element.created_at)}
-                    </p>
-                    <p className="p-1">-</p>
-                    <p className="p-1">
-                      Duration: {secondsToMinutes(element.duration)} min
-                    </p>
-                  </li>
-                )
-              })}
-            </ul>
+            {data.user_history ? (
+              <ul>
+                {data.user_history.map((element) => {
+                  return (
+                    <li key={element.id} className="flex p-1 justify-evenly ">
+                      <p className="p-1 ">
+                        Date: {dateWithtimeFormatter(element.created_at)}
+                      </p>
+                      <p className="p-1">-</p>
+                      <p className="p-1">
+                        Duration: {secondsToMinutes(element.duration)} min
+                      </p>
+                    </li>
+                  )
+                })}
+              </ul>
+            ) : (
+              <p className="mt-2">No items to show</p>
+            )}
           </div>
         </div>
       )}

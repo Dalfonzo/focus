@@ -21,6 +21,7 @@ const Layout = ({ children }) => {
       <Head>
         <title>{currentPageFormatter({ pathname })}</title>
         <meta property="og:title" content="Focus App" key="Focus App" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"></link>
       </Head>
       <header className="max-w-screen-lg px-4 py-8 m-auto text-center align-middle gap-7">
         <nav className="flex justify-end ">
