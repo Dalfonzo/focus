@@ -54,13 +54,13 @@ const Layout = ({ children }) => {
           {isAuthenticated ? (
             <>
               <Link href={`/profile/${userId}`}>
-                <a className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up">
+                <a className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up">
                   <ProfileIcon className="mx-2" />
                   <p className="hidden sm:block">Profile</p>
                 </a>
               </Link>
               <button
-                className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up"
+                className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up"
                 onClick={() => dispatch(signOut())}
               >
                 <SignOutIcon className="mx-2" />
@@ -69,7 +69,7 @@ const Layout = ({ children }) => {
             </>
           ) : (
             <Link href="/signin">
-              <a className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up">
+              <a className="flex items-center justify-center p-2 hover:text-white-normal rounded-[5px] move-up">
                 <SignInIcon className="mx-2" />
                 <p className="hidden sm:block">Sign in</p>
               </a>
