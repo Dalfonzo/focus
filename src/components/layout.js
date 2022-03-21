@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import { SignInIcon, SignOutIcon, ProfileIcon, NutIcon } from '../lib'
+import { SignInIcon, SignOutIcon, ProfileIcon, NutIcon, HomeIcon } from '../lib'
 import { currentPageFormatter } from '../utils'
 import { useAuthGuard } from '../hooks/useAuthGuard'
 import { signOut } from '../features/authentication/authenticationSlice'
@@ -39,10 +39,16 @@ const Layout = ({ children }) => {
       </Head>
       <header className="max-w-screen-lg px-4 py-8 m-auto text-center align-middle gap-7">
         <nav className="flex justify-end ">
+          <Link href="/">
+            <a className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up">
+              <HomeIcon className="mx-2" />
+              <p className="hidden sm:block">Home</p>
+            </a>
+          </Link>
           <Link href="/configuration">
             <a className="flex items-center justify-center p-2 rounded-[5px] hover:text-white-normal move-up">
               <NutIcon className="mx-2" />
-              Configuration
+              <p className="hidden sm:block">Configuration</p>
             </a>
           </Link>
           {isAuthenticated ? (
@@ -50,7 +56,7 @@ const Layout = ({ children }) => {
               <Link href={`/profile/${userId}`}>
                 <a className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up">
                   <ProfileIcon className="mx-2" />
-                  Profile
+                  <p className="hidden sm:block">Profile</p>
                 </a>
               </Link>
               <button
@@ -58,14 +64,14 @@ const Layout = ({ children }) => {
                 onClick={() => dispatch(signOut())}
               >
                 <SignOutIcon className="mx-2" />
-                Sign out
+                <p className="hidden sm:block">Sign out</p>
               </button>
             </>
           ) : (
             <Link href="/signin">
               <a className="flex items-center justify-center p-2 ml-4 hover:text-white-normal rounded-[5px] move-up">
                 <SignInIcon className="mx-2" />
-                Sign in
+                <p className="hidden sm:block">Sign in</p>
               </a>
             </Link>
           )}
