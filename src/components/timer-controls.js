@@ -24,6 +24,7 @@ const Controls = () => {
         onClick={onPlayClickHandler}
         className="flex rounded-[50%]  p-1 relative main-gradient move-up"
         name="play/pause"
+        aria-label="play/pause"
       >
         <span className="w-full h-full rounded-[50%] p-1 bg-[rgb(0 0 0 / 5%)] backdrop-blur-xl backdrop-saturate-100 ">
           {status === 'playing' ? (
@@ -37,6 +38,7 @@ const Controls = () => {
         onClick={onStopClickHandler}
         disabled={status === 'idle'}
         name="restart"
+        aria-label="restart"
       >
         <RestartIcon className="m-2 move-up" />
       </button>

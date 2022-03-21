@@ -21,9 +21,10 @@ const Layout = ({ children }) => {
       <Head>
         <title>{currentPageFormatter({ pathname })}</title>
         <meta property="og:title" content="Focus App" key="Focus App" />
-        <meta name="description">
-          An app to increase productivity using the pomodoro technique
-        </meta>
+        <meta
+          name="description"
+          content=" An app to increase productivity using the pomodoro technique"
+        />
         <link
           rel="icon"
           type="image/png"
