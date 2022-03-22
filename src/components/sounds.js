@@ -33,13 +33,12 @@ const Sounds = ({ children }) => {
   return (
     <div>
       {backgroundSound !== 'none' && (
-        <audio
-          controls
-          src={`/sounds/${backgroundSound}.mp3`}
-          ref={backgroundAudioRef}
-          loop
-          className="hidden h-0"
-        />
+        <audio controls ref={backgroundAudioRef} loop className="hidden h-0">
+          <source src={`/sounds/${backgroundSound}.mp3`} type="audio/mpeg" />
+          <source src={`/sounds/${backgroundSound}.ogg`} type="audio/ogg" />
+          <source src={`/sounds/${backgroundSound}.m4a`} type="audio/mp4" />
+          Your browser does not support the audio element.
+        </audio>
       )}
       <audio
         controls
