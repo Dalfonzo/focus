@@ -10,5 +10,5 @@ This project was made to combine my two most used apps -Rainymood and Pomodoro- 
 1. Execute
 
 ```js
-  npm dev
+  npm run dev
 ```
