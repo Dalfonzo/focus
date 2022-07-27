@@ -1,6 +1,6 @@
-import Layout from '../../components/layout'
 import { supabase } from '../../lib/supabaseClient'
 import BackBtn from '../../components/back-btn'
+import ErrorMessage from '../../components/error-message'
 import {
   dateWithtimeFormatter,
   secondsToMinutes,
@@ -9,10 +9,10 @@ import {
 
 export default function Profile({ data, error }) {
   return (
-    <Layout>
+    <>
       <BackBtn />
       {error ? (
-        <h1 className="text-center">Something went wrong :/ ... </h1>
+        <ErrorMessage />
       ) : (
         <div className="w-full max-w-lg mx-auto bg-white-10 z-[1] relative p-[2rem] lg:p-[3rem] shadow-container rounded-[10px]">
           <div className="shadow-container rounded-[10px] p-4 my-2">
@@ -68,7 +68,7 @@ export default function Profile({ data, error }) {
           </div>
         </div>
       )}
-    </Layout>
+    </>
   )
 }
 

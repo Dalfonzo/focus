@@ -71,10 +71,24 @@ export const signOut = createAsyncThunk(
   }
 )
 
+export const resetStatus = createAsyncThunk(
+  'auth/resetStatus',
+  async (_, { dispatch }) => {
+    dispatch({ type: 'auth/reset' })
+  }
+)
+
 const authReducer = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    reset: (state) => {
+      return {
+        ...state,
+        status: 'idle',
+        error: null,
+      }
+    },
     started: (state) => {
       return {
         ...state,

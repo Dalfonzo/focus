@@ -4,9 +4,13 @@ import { persistStore } from 'redux-persist'
 import { store } from '../app/store'
 import Sounds from '../components/sounds'
 import RouterGuard from '../components/router-guard'
+import Layout from '../components/layout'
+import { useLoadingHandler } from '../hooks/useLoadingHandler'
+import Spinner from '../components/spinner'
 import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
+  const { isLoading } = useLoadingHandler()
   let persistor = persistStore(store)
 
   return (
@@ -14,7 +18,9 @@ function MyApp({ Component, pageProps }) {
       <PersistGate loading={null} persistor={persistor}>
         <RouterGuard>
           <Sounds>
-            <Component {...pageProps} />
+            <Layout>
+              {isLoading ? <Spinner /> : <Component {...pageProps} />}
+            </Layout>
           </Sounds>
         </RouterGuard>
       </PersistGate>

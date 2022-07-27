@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import Layout from '../components/layout'
 import BackBtn from '../components/back-btn'
 import { useAuthGuard } from '../hooks/useAuthGuard'
+import { resetStatus } from '../features/authentication/authenticationSlice'
+import { useDispatch } from 'react-redux'
 
 const AuthForm = ({ onSubmitHandler, title }) => {
   const error = useSelector((state) => state.auth.error)
@@ -17,6 +18,7 @@ const AuthForm = ({ onSubmitHandler, title }) => {
 
   const { isAuthenticated } = useAuthGuard()
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const onChangeHandler = (event) => {
     setState((prevState) => ({
@@ -33,13 +35,19 @@ const AuthForm = ({ onSubmitHandler, title }) => {
     router.push('/')
   }, [isAuthenticated, router])
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetStatus())
+    }
+  }, [dispatch])
+
   return (
-    <Layout>
+    <>
       <BackBtn />
       <div className="w-full max-w-lg mx-auto bg-white-10 z-[1] relative p-[1rem] md:p-[3rem] lg:p-[4rem] shadow-container rounded-[10px]">
         {error && (
-          <p className="text-center text-red-400 bold">
-            **Error: {error.message}**
+          <p className="font-bold text-center text-red-400">
+            Error: {error.message}
           </p>
         )}
         <form
@@ -103,7 +111,7 @@ const AuthForm = ({ onSubmitHandler, title }) => {
           )}
         </form>
       </div>
-    </Layout>
+    </>
   )
 }
 

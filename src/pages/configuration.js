@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Layout from '../components/layout'
 import { saveConfiguration } from '../features/pomodoro/pomodoroSlice'
 import { secondsToMinutes, minutesToSeconds } from '../utils'
 import BackBtn from '../components/back-btn'
+import toast, { Toaster } from 'react-hot-toast'
 
 const ALERT_SOUNDS = ['success']
 const BACKGROUND_SOUNDS = ['none', 'rain', 'bonfire']
@@ -16,6 +16,8 @@ const Configuration = () => {
     backgroundSound: state.pomodoro.backgroundSound,
     alertSound: state.pomodoro.alertSound,
   }))
+
+  const notify = () => toast.success('Configuration changed successfully')
 
   const [config, setConfig] = useState(initState)
   const dispatch = useDispatch()
@@ -45,10 +47,11 @@ const Configuration = () => {
         longBreakDuration: minutesToSeconds(config.longBreakDuration),
       })
     )
+    notify()
   }
 
   return (
-    <Layout>
+    <>
       <BackBtn />
       <div className="w-full max-w-lg mx-auto bg-white-10 z-[1] relative p-[1rem] md:p-[3rem] lg:p-[5rem] shadow-container rounded-[10px]">
         <form className="w-full" onSubmit={onSubmitHandler}>
@@ -117,7 +120,7 @@ const Configuration = () => {
               background sound
             </p>
             <p className="mt-1 mb-4 text-sm text-fuchsia">
-              Note: These sounds will play only when the pomodoro is runnig
+              Note: These sounds will play only when the timer is running
             </p>
             <div className="space-y-4">
               {BACKGROUND_SOUNDS.map((sound, index) => {
@@ -177,8 +180,18 @@ const Configuration = () => {
             Save Changes
           </button>
         </form>
+        <Toaster
+          toastOptions={{
+            style: {
+              background: '#212125',
+              border: '1px solid white',
+              padding: '16px',
+              color: 'white',
+            },
+          }}
+        />
       </div>
-    </Layout>
+    </>
   )
 }
 
